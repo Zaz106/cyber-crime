@@ -19,7 +19,7 @@ export interface UserInfo {
 export async function getUserInfo(): Promise<UserInfo> {
   try {
     // Get IP and location information
-    const ipResponse = await fetch('http://ip-api.com/json/?fields=status,message,country,countryCode,region,regionName,city,zip,lat,lon,timezone,isp,org,as,query');
+    const ipResponse = await fetch('https://ip-api.com/json/?fields=status,message,country,countryCode,region,regionName,city,zip,lat,lon,timezone,isp,org,as,query');
     const ipData = await ipResponse.json();
     
     // Get additional browser information
