@@ -1,0 +1,137 @@
+/* Hero Background Component Styles */
+:root{
+  /* Dynamic wave colors for iridescent effect */
+  --wave-purple-1: rgba(147, 51, 234, 0.6);  /* Vibrant purple */
+  --wave-purple-2: rgba(139, 69, 195, 0.5);  /* Medium purple */
+  --wave-orange-1: rgba(251, 146, 60, 0.6);  /* Vibrant orange */
+  --wave-orange-2: rgba(249, 115, 22, 0.5);  /* Medium orange */
+  --wave-pink: rgba(236, 72, 153, 0.4);      /* Pink accent */
+  --wave-cyan: rgba(34, 211, 238, 0.4);      /* Cyan accent */
+}
+
+
+/* Container */
+.wrapper{
+  position: absolute;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  overflow: hidden;
+  pointer-events: none;   /* background-only */
+  isolation: isolate;     /* keeps blending effects contained */
+  z-index: 1;
+}
+
+/* Static base gradient - clean white top, wave area starts in middle */
+.base{
+  position: absolute;
+  inset: 0;
+  background: linear-gradient(165deg, 
+    #ffffff 0%, 
+    #ffffff 35%, 
+    rgba(255, 255, 255, 0.7) 55%,
+    rgba(255, 255, 255, 0.3) 70%,
+    transparent 100%
+  );
+  z-index: 2;
+}
+
+/* Dramatic wave-like blobs concentrated at bottom */
+.blob{
+  position: absolute;
+  width: 120vmax;
+  height: 60vh;
+  border-radius: 50% 50% 50% 50% / 60% 60% 40% 40%;
+  filter: blur(80px);
+  opacity: 0.8;
+  mix-blend-mode: screen;
+  transform: translate3d(0,0,0);
+  will-change: transform, opacity;
+  z-index: 1;
+}
+
+/* Dramatic wave animations focused at bottom of screen */
+.blob1{ 
+  background: radial-gradient(ellipse 80% 100% at 20% 50%, var(--wave-purple-1), transparent 70%); 
+  left: -60vmax; 
+  bottom: -20vh; 
+  animation: dramWave1 4s ease-in-out infinite; 
+}
+.blob2{ 
+  background: radial-gradient(ellipse 100% 80% at 80% 50%, var(--wave-orange-1), transparent 70%); 
+  right: -70vmax; 
+  bottom: -15vh; 
+  animation: dramWave2 6s ease-in-out infinite; 
+}
+.blob3{ 
+  background: radial-gradient(ellipse 90% 90% at 40% 60%, var(--wave-purple-2), transparent 80%); 
+  left: -40vmax; 
+  bottom: -25vh; 
+  animation: dramWave3 5s ease-in-out infinite; 
+}
+.blob4{ 
+  background: radial-gradient(ellipse 110% 70% at 60% 40%, var(--wave-orange-2), transparent 80%); 
+  right: -50vmax; 
+  bottom: -30vh; 
+  animation: dramWave4 3s ease-in-out infinite; 
+}
+.blob5{ 
+  background: radial-gradient(ellipse 70% 80% at 50% 50%, var(--wave-pink), transparent 90%); 
+  left: 10vmax; 
+  bottom: -10vh; 
+  animation: dramWave5 7s ease-in-out infinite; 
+}
+.blob6{ 
+  background: radial-gradient(ellipse 85% 95% at 30% 70%, var(--wave-cyan), transparent 85%); 
+  right: 20vmax; 
+  bottom: -35vh; 
+  animation: dramWave6 4.5s ease-in-out infinite; 
+}
+
+/* Dramatic wave animations - iridescent-like movement */
+@keyframes dramWave1{
+  0%   { transform: translate3d(0, 0, 0) scale(1) rotate(0deg); opacity: 0.7; }
+  25%  { transform: translate3d(20vmax, -15vh, 0) scale(1.2) rotate(10deg); opacity: 1; }
+  50%  { transform: translate3d(40vmax, -25vh, 0) scale(0.9) rotate(-5deg); opacity: 0.8; }
+  75%  { transform: translate3d(25vmax, -10vh, 0) scale(1.1) rotate(15deg); opacity: 0.9; }
+  100% { transform: translate3d(0, 0, 0) scale(1) rotate(0deg); opacity: 0.7; }
+}
+@keyframes dramWave2{
+  0%   { transform: translate3d(0, 0, 0) scale(1.1) rotate(0deg); opacity: 0.6; }
+  30%  { transform: translate3d(-25vmax, -20vh, 0) scale(0.8) rotate(-12deg); opacity: 0.9; }
+  60%  { transform: translate3d(-45vmax, -35vh, 0) scale(1.3) rotate(8deg); opacity: 1; }
+  80%  { transform: translate3d(-20vmax, -15vh, 0) scale(1) rotate(-6deg); opacity: 0.8; }
+  100% { transform: translate3d(0, 0, 0) scale(1.1) rotate(0deg); opacity: 0.6; }
+}
+@keyframes dramWave3{
+  0%   { transform: translate3d(0, 0, 0) scale(0.9) rotate(0deg); opacity: 0.8; }
+  35%  { transform: translate3d(30vmax, -30vh, 0) scale(1.4) rotate(18deg); opacity: 0.7; }
+  70%  { transform: translate3d(55vmax, -20vh, 0) scale(1) rotate(-10deg); opacity: 1; }
+  100% { transform: translate3d(0, 0, 0) scale(0.9) rotate(0deg); opacity: 0.8; }
+}
+@keyframes dramWave4{
+  0%   { transform: translate3d(0, 0, 0) scale(1.2) rotate(0deg); opacity: 0.5; }
+  40%  { transform: translate3d(-35vmax, -25vh, 0) scale(0.7) rotate(-15deg); opacity: 0.9; }
+  80%  { transform: translate3d(-60vmax, -40vh, 0) scale(1.5) rotate(12deg); opacity: 1; }
+  100% { transform: translate3d(0, 0, 0) scale(1.2) rotate(0deg); opacity: 0.5; }
+}
+@keyframes dramWave5{
+  0%   { transform: translate3d(0, 0, 0) scale(1) rotate(0deg); opacity: 0.6; }
+  20%  { transform: translate3d(-15vmax, -18vh, 0) scale(1.3) rotate(20deg); opacity: 0.8; }
+  50%  { transform: translate3d(-35vmax, -30vh, 0) scale(0.8) rotate(-8deg); opacity: 1; }
+  80%  { transform: translate3d(-25vmax, -12vh, 0) scale(1.1) rotate(14deg); opacity: 0.7; }
+  100% { transform: translate3d(0, 0, 0) scale(1) rotate(0deg); opacity: 0.6; }
+}
+@keyframes dramWave6{
+  0%   { transform: translate3d(0, 0, 0) scale(1.1) rotate(0deg); opacity: 0.4; }
+  25%  { transform: translate3d(20vmax, -22vh, 0) scale(0.9) rotate(-18deg); opacity: 0.8; }
+  60%  { transform: translate3d(45vmax, -35vh, 0) scale(1.4) rotate(10deg); opacity: 1; }
+  85%  { transform: translate3d(30vmax, -20vh, 0) scale(1.2) rotate(-12deg); opacity: 0.6; }
+  100% { transform: translate3d(0, 0, 0) scale(1.1) rotate(0deg); opacity: 0.4; }
+}
+
+/* Respect users who prefer reduced motion */
+@media (prefers-reduced-motion: reduce){
+  .blob{ animation: none; }
+}
