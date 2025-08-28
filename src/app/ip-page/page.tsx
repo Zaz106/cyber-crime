@@ -1,6 +1,6 @@
 'use client';
 
-import { useEffect, useState } from 'react';
+import { useEffect, useState, useRef } from 'react';
 import AnimatedSmoke from '../../components/layout/animated-smoke';
 import { getUserInfo, UserInfo } from '../../library/utils/getUserInfo';
 import styles from './page.module.css';
@@ -8,14 +8,23 @@ import styles from './page.module.css';
 export default function IPPage() {
   const [userInfo, setUserInfo] = useState<UserInfo | null>(null);
   const [loading, setLoading] = useState(true);
+  const [error, setError] = useState<string | null>(null);
+  const hasFetched = useRef(false);
 
   useEffect(() => {
+    // Prevent multiple requests
+    if (hasFetched.current) return;
+    hasFetched.current = true;
+
     const fetchUserInfo = async () => {
       try {
+        setLoading(true);
+        setError(null);
         const info = await getUserInfo();
         setUserInfo(info);
       } catch (error) {
         console.error('Error fetching user info:', error);
+        setError('Failed to load user information');
       } finally {
         setLoading(false);
       }
@@ -46,6 +55,33 @@ export default function IPPage() {
             <div className={styles.loadingContainer}>
               <div className={styles.spinner}></div>
               <p className={styles.loadingText}>Gathering your information...</p>
+            </div>
+          ) : error ? (
+            <div className={styles.errorContainer}>
+              <p className={styles.errorText}>{error}</p>
+              <button 
+                onClick={() => {
+                  setError(null);
+                  setLoading(true);
+                  hasFetched.current = false;
+                  // Trigger re-fetch
+                  const fetchUserInfo = async () => {
+                    try {
+                      const info = await getUserInfo();
+                      setUserInfo(info);
+                    } catch (error) {
+                      console.error('Error fetching user info:', error);
+                      setError('Failed to load user information');
+                    } finally {
+                      setLoading(false);
+                    }
+                  };
+                  fetchUserInfo();
+                }}
+                className={styles.retryButton}
+              >
+                Try Again
+              </button>
             </div>
           ) : userInfo ? (
             <div className={styles.grid}>
